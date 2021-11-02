@@ -16,6 +16,7 @@
 let song;
 var amplitude;
 var mapMax = 0.4;
+let fft;
 
 function preload() {
   song = loadSound('assets/17. Spring.mp3');
@@ -26,31 +27,53 @@ function setup() {
   song.loop(); // la canción está lista para ser reproducida durante setup() porque fue cargada durante preload()
   background(0);
   noStroke();
+  //para que no vuele oidos
+    song.amp(0.2);
    amplitude = new p5.Amplitude();
+   fft = new p5.FFT();
+   fft.setInput(song);
 
 }
 
 function  draw(){
  background(0);
+ let spectrum = fft.analyze();
+  let bass, lowMid, mid, highMid, treble;
 
- var level = amplitude.getLevel();
-  text('Amplitude: ' + level, 20, 20);
-  text('mapMax: ' + mapMax, 20, 40);
-  var ellipseHeight = map(level, 0, mapMax, height, 0);
-  ellipse(width/2, ellipseHeight, 100, 100);
+  bass = fft.getEnergy("bass");
+  lowMid = fft.getEnergy("lowMid");
+  mid = fft.getEnergy("mid");
+  highMid = fft.getEnergy("highMid");
+  treble = fft.getEnergy("treble");
+  let bins=[bass,lowMid,mid,highMid,treble]
+  for (var i =0;i<5;i++){
+
+      fill(i+1*(255/5)/255,(i+1)*(255/5),0);
+      var ellipseHeight = map(bass[i], 0, 255, 0,-height/2)
+      ellipse (width/3, ellipseHeight, 50, 50);
+
+      fill(i+1*(255/5)/255,(i+1)*(255/5),0);
+      var ellipseHeight1 = map(lowMid[i], 0, 255, 0,-height/2)
+      ellipse (width/3, ellipseHeight1, 50, 50);
+
+      fill(i+1*(255/5)/255,(i+1)*(255/5),0);
+      var ellipseHeight2 = map(mid[i], 0, 255, 0,-height/2)
+      ellipse (width/3, ellipseHeight2, 50, 50);
+
+    }
 
 
-  var leve1 = amplitude.getLevel();
-   text('Amplitude: ' + level, 20, 20);
-   text('mapMax: ' + mapMax, 20, 40);
-   var ellipseHeight1 = map(level, 0, mapMax, height, 0);
-   ellipse(width/4, ellipseHeight, 100, 100);
 
-   var level = amplitude.getLevel();
-    text('Amplitude: ' + level, 20, 20);
-    text('mapMax: ' + mapMax, 20, 40);
-    var ellipseHeight2 = map(level, height, mapMax, height, 0);
-    ellipse(3*width/4, ellipseHeight, 100, 100);
+function mousePressed() {
+  if (song.isPlaying()) {
+    // .isPlaying() retorna una variable booleana
+    song.pause(); // .play() continuará la reproducción desde la posición definida por .pause()
+    background(random(255));
+  } else {
+    song.play();
+    background(random(255));
+  }
+}
 
 
 
