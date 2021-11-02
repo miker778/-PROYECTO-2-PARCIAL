@@ -23,7 +23,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
-  song.play(); // la canción está lista para ser reproducida durante setup() porque fue cargada durante preload()
+  song.loop(); // la canción está lista para ser reproducida durante setup() porque fue cargada durante preload()
   background(0);
   noStroke();
    amplitude = new p5.Amplitude();
