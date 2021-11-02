@@ -15,11 +15,16 @@
 
 let song;
 var amplitude;
-var mapMax = 0.4;
+var mapMax = 1;
 let fft;
 
 function preload() {
-  song = loadSound('assets/17. Spring.mp3');
+  //song = loadSound('assets/17. Spring.mp3');
+  song = loadSound('assets/Bad Bunny  - BOOKER T (Letra_Lyric).mp3');
+//  song = loadSound('assets/El Paso Del Gigante.mp3');
+  //song = loadSound('assets/Fake Blood - I Think I Like It.mp3');
+  //song = loadSound('assets/Hardwell - Spaceman (Original Mix).mp3');
+  //song = loadSound('assets/Squid Game _ Do It To It (Zedd Edit).mp3');
 }
 
 function setup() {
@@ -46,42 +51,66 @@ function  draw(){
   highMid = fft.getEnergy("highMid");
   treble = fft.getEnergy("treble");
   let bins=[bass,lowMid,mid,highMid,treble]
-  for (var i =0;i<5;i++){
 
-      fill(i+1*(255/5)/255,(i+1)*(255/5),0);
-      var ellipseHeight = map(bass[i], 0, 255, 0,-height/2)
-      ellipse (width/3, ellipseHeight, 50, 50);
+  console.log("Bass: "+bass+" lowMid: "+lowMid+" mid: "+mid+" highMid: "+highMid+" treble: "+treble);
 
-      fill(i+1*(255/5)/255,(i+1)*(255/5),0);
-      var ellipseHeight1 = map(lowMid[i], 0, 255, 0,-height/2)
-      ellipse (width/3, ellipseHeight1, 50, 50);
 
-      fill(i+1*(255/5)/255,(i+1)*(255/5),0);
-      var ellipseHeight2 = map(mid[i], 0, 255, 0,-height/2)
-      ellipse (width/3, ellipseHeight2, 50, 50);
+
+ var level = amplitude.getLevel();
+
+  var ellipsex = map(lowMid/255, 0, mapMax, height, 0);
+
+  var ellipseWidth = map(lowMid/255, 0, mapMax, height, 0);
+  var ellipseHeight = map(lowMid/255, 0, mapMax, height, 0);
+
+  ellipse(width/3, ellipsex, 50, 50);
+
+  ellipseMode (CENTER);
+  fill (random(255),random(255),random(255));
+
+
+
+  var level = amplitude.getLevel();
+   var ellipseHeight1 = map(bass/255, 0, mapMax, height, 0);
+   ellipse(width/5, ellipseHeight1, 50, 50);
+   ellipseMode (CENTER);
+   fill (random(255),random(255),random(255));
+
+
+
+   var level = amplitude.getLevel();
+    var ellipseHeight2 = map(mid/255, 0, mapMax, height, 0);
+    ellipse(3*width/6, ellipseHeight2, 50, 50);
+    ellipseMode (CENTER);
+    fill (random(255),random(255),random(255));
+
+
+    var level = amplitude.getLevel();
+     var ellipseHeight3  = map(highMid/255, 0, mapMax, height, 0);
+     ellipse(2*width/3 , ellipseHeight3, 50, 50);
+     ellipseMode (CENTER);
+     fill (random(255),random(255),random(255))
+
+     var level = amplitude.getLevel();
+      var ellipseHeight4  = map(treble/255, 0, mapMax, height, 0);
+      ellipse(2.4*width/3 , ellipseHeight4, 50, 50);
+      ellipseMode (CENTER);
+      fill (random(255),random(255),random(255));
+
+
+      var level = amplitude.getLevel();
+       var ellipseHeight5  = map(level, 0, mapMax, height, 0);
+       ellipse(2.6*width/3 , ellipseHeight5, 50, 50);
+       ellipseMode (CENTER);
+       fill (random(255),random(255),random(255));
+
+
+
+
 
     }
 
 
-
-function mousePressed() {
-  if (song.isPlaying()) {
-    // .isPlaying() retorna una variable booleana
-    song.pause(); // .play() continuará la reproducción desde la posición definida por .pause()
-    background(random(255));
-  } else {
-    song.play();
-    background(random(255));
-  }
-}
-
-
-
-
-
-
-
-}
 
 
 function mousePressed() {
