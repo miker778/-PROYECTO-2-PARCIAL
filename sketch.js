@@ -18,7 +18,7 @@ var amplitude;
 var mapMax = 0.4;
 
 function preload() {
-  song = loadSound('/assets/17. Spring.mp3');
+  song = loadSound('assets/17. Spring.mp3');
 }
 
 function setup() {
